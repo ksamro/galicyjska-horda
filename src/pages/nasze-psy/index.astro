@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const dogs = await getCollection('dogs');
+---
+<BaseLayout title="Nasze psy | Galicyjska Horda" description="Profile psów hodowli Galicyjska Horda.">
+  <section class="section container">
+    <h1>Nasze psy</h1>
+    <div class="grid grid-3">
+      {dogs.map((dog) => (
+        <article class="card">
+          <h2>{dog.data.name}</h2>
+          <p class="muted">{dog.data.breed}</p>
+          <p>Data ur.: {dog.data.birthDate}</p>
+          <a href={`/nasze-psy/${dog.slug}`}>Zobacz profil</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

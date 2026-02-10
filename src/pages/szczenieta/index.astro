@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PuppyStatus from '../../components/PuppyStatus.astro';
+import { getCollection } from 'astro:content';
+
+const litters = await getCollection('litters');
+const byCategory = (cat) => litters.filter((l) => l.data.category === cat);
+
+const faq = [
+  ['Jak wygląda rezerwacja?', 'Po kontakcie umawiamy rozmowę i przekazujemy szczegóły procesu rezerwacji.'],
+  ['Co zawiera wyprawka?', 'Przykładowo: karma na start, podstawowe akcesoria i wskazówki opieki.'],
+  ['Jakie dokumenty otrzymuję?', 'Metrykę ZKwP/FCI oraz informacje hodowlane zgodnie z obowiązującymi zasadami.']
+];
+---
+<BaseLayout title="Szczenięta i mioty | Galicyjska Horda" description="Aktualne informacje o szczeniętach, planach i archiwum miotów.">
+  <section class="section container">
+    <h1>Szczenięta i mioty</h1>
+    <PuppyStatus />
+
+    <h2>Aktualności miotowe</h2>
+    <div class="grid">{byCategory('aktualne').map((item) => <article class="card"><h3>{item.data.title}</h3><p>{item.data.summary}</p></article>)}</div>
+
+    <h2>Plany</h2>
+    <div class="grid">{byCategory('plany').map((item) => <article class="card"><h3>{item.data.title}</h3><p>{item.data.summary}</p></article>)}</div>
+
+    <h2>Archiwum miotów</h2>
+    <div class="grid">{byCategory('archiwum').map((item) => <article class="card"><h3>{item.data.title}</h3><p>{item.data.summary}</p></article>)}</div>
+
+    <h2>FAQ</h2>
+    <div class="faq">
+      {faq.map(([q, a]) => (
+        <details>
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

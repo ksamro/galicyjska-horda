@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTAButtons from '../components/CTAButtons.astro';
+import PuppyStatus from '../components/PuppyStatus.astro';
+import Gallery from '../components/Gallery.astro';
+import { getCollection } from 'astro:content';
+
+const breeds = await getCollection('breeds');
+const dogs = (await getCollection('dogs')).slice(0, 3);
+---
+<BaseLayout title="Galicyjska Horda (FCI/ZKwP)" description="Hodowla psów rasowych Galicyjska Horda - Cane Corso, Buldog francuski i Cavalier King Charles Spaniel.">
+  <section class="hero container">
+    <p class="muted">Hodowla psów rasowych</p>
+    <h1>Galicyjska Horda (FCI/ZKwP)</h1>
+    <p>Witamy na stronie hodowli. Stawiamy na dobrostan, socjalizację i odpowiedzialne prowadzenie psów rasowych.</p>
+    <PuppyStatus />
+    <div style="margin-top:1rem;"><CTAButtons /></div>
+  </section>
+
+  <section class="section container">
+    <h2>Nasze rasy</h2>
+    <div class="grid grid-3">
+      {breeds.map((breed) => (
+        <article class="card">
+          <h3>{breed.data.name}</h3>
+          <p>{breed.data.intro}</p>
+          <a href={`/rasy/${breed.slug}`}>Czytaj więcej</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2>Wybrane profile</h2>
+    <div class="grid grid-3">
+      {dogs.map((dog) => (
+        <article class="card">
+          <h3>{dog.data.name}</h3>
+          <p class="muted">{dog.data.breed}</p>
+          <a href={`/nasze-psy/${dog.slug}`}>Profil psa</a>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="section container">
+    <h2>Galeria</h2>
+    <Gallery images={[
+      { src: '/placeholders/gallery-1.svg', alt: 'Placeholder zdjęcia psa 1' },
+      { src: '/placeholders/gallery-2.svg', alt: 'Placeholder zdjęcia psa 2' },
+      { src: '/placeholders/gallery-3.svg', alt: 'Placeholder zdjęcia psa 3' }
+    ]} />
+  </section>
+
+</BaseLayout>

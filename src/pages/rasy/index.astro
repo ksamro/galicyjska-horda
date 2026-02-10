@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const breeds = await getCollection('breeds');
+---
+<BaseLayout title="Rasy | Galicyjska Horda" description="Rasy prowadzone w hodowli Galicyjska Horda.">
+  <section class="section container">
+    <h1>Rasy</h1>
+    <div class="grid grid-3">
+      {breeds.map((breed) => (
+        <article class="card">
+          <h2>{breed.data.name}</h2>
+          <p>{breed.data.intro}</p>
+          <a href={`/rasy/${breed.slug}`}>Szczegóły rasy</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

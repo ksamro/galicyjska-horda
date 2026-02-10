@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news');
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+<BaseLayout title={`${post.data.title} | Galicyjska Horda`} description={post.data.excerpt}>
+  <section class="section container">
+    <p class="muted">{post.data.date} · {post.data.exampleContent ? 'Treść przykładowa' : 'Wpis'}</p>
+    <h1>{post.data.title}</h1>
+    <article class="card"><Content /></article>
+  </section>
+</BaseLayout>

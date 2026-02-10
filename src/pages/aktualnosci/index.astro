@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('news')).sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+<BaseLayout title="Aktualności | Galicyjska Horda" description="Aktualności z życia hodowli Galicyjska Horda.">
+  <section class="section container">
+    <h1>Aktualności</h1>
+    <div class="grid">
+      {posts.map((post) => (
+        <article class="card">
+          <p class="muted">{post.data.date} · {post.data.exampleContent ? 'Treść przykładowa' : 'Wpis'}</p>
+          <h2>{post.data.title}</h2>
+          <p>{post.data.excerpt}</p>
+          <a href={`/aktualnosci/${post.slug}`}>Czytaj</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
