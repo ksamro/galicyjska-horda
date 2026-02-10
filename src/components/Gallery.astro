@@ -1,0 +1,11 @@
+---
+interface Props { images: { src: string; alt: string }[] }
+const { images } = Astro.props;
+---
+<div class="grid grid-3" aria-label="Galeria zdjęć">
+  {images.map((img) => (
+    <figure class="card" style="padding:.5rem;">
+      <img src={img.src} alt={img.alt} loading="lazy" />
+    </figure>
+  ))}
+</div>

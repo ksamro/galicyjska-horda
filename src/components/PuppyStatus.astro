@@ -1,0 +1,8 @@
+---
+import config from '../config.json';
+---
+{config.availablePuppies ? (
+  <p class="badge ok" role="status" aria-live="polite">Szczenięta dostępne</p>
+) : (
+  <p class="badge no" role="status" aria-live="polite">Obecnie brak szczeniąt</p>
+)}

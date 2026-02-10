@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://galicyjskahorda.pl/sitemap-index.xml

@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const dogs = await getCollection('dogs');
+  return dogs.map((dog) => ({ params: { slug: dog.slug }, props: { dog } }));
+}
+
+const { dog } = Astro.props;
+const { Content } = await dog.render();
+---
+<BaseLayout title={`${dog.data.name} | Galicyjska Horda`} description={`Profil psa: ${dog.data.name}`}>
+  <section class="section container">
+    <h1>{dog.data.name}</h1>
+    <p class="muted">{dog.data.breed}</p>
+    <div class="card">
+      <p><strong>Data ur.:</strong> {dog.data.birthDate}</p>
+      <h2>Osiągnięcia</h2>
+      <ul>{dog.data.achievements.map((a) => <li>{a}</li>)}</ul>
+      {dog.data.health && (
+        <>
+          <h2>Badania (opcjonalne)</h2>
+          <ul>{dog.data.health.map((h) => <li>{h}</li>)}</ul>
+        </>
+      )}
+    </div>
+    <article class="card" style="margin-top:1rem;"><Content /></article>
+  </section>
+</BaseLayout>

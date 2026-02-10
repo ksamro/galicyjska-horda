@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import config from '../config.json';
+const subject = encodeURIComponent('Kontakt ze strony Galicyjska Horda');
+const body = encodeURIComponent('Dzień dobry,\n\nPiszę w sprawie...');
+---
+<BaseLayout title="Kontakt | Galicyjska Horda" description="Skontaktuj się z hodowlą Galicyjska Horda.">
+  <section class="section container">
+    <h1>Kontakt</h1>
+    <div class="grid grid-3">
+      <article class="card"><h2>Telefon</h2><p>{config.contact.phone}</p></article>
+      <article class="card"><h2>E-mail</h2><p><a href={`mailto:${config.contact.email}`}>{config.contact.email}</a></p></article>
+      <article class="card"><h2>Social</h2><p><a href={config.contact.social} target="_blank" rel="noreferrer">Profil społecznościowy</a></p></article>
+    </div>
+
+    <article class="card" style="margin-top:1rem;">
+      <h2>Formularz kontaktowy (bez backendu)</h2>
+      <form action={`mailto:${config.contact.email}?subject=${subject}&body=${body}`} method="post" enctype="text/plain">
+        <label for="name">Imię i nazwisko</label><br />
+        <input id="name" name="name" required style="width:100%;padding:.6rem;margin:.3rem 0 1rem;" />
+        <label for="message">Wiadomość</label><br />
+        <textarea id="message" name="message" rows="6" required style="width:100%;padding:.6rem;margin:.3rem 0 1rem;"></textarea>
+        <button class="btn" type="submit">Wyślij</button>
+      </form>
+      <p class="muted">Opcjonalnie: podłącz Formspree lub Netlify Forms zgodnie z instrukcją w README.</p>
+    </article>
+
+    <article class="card" style="margin-top:1rem;">
+      <h2>Lokalizacja</h2>
+      <p>{config.contact.location}</p>
+      <p><a href="https://maps.google.com" target="_blank" rel="noreferrer">Otwórz mapę Google (placeholder)</a></p>
+    </article>
+  </section>
+</BaseLayout>

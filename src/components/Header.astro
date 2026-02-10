@@ -1,0 +1,19 @@
+---
+const navItems = [
+  { href: '/', label: 'Start' },
+  { href: '/o-hodowli', label: 'O hodowli' },
+  { href: '/rasy', label: 'Rasy' },
+  { href: '/nasze-psy', label: 'Nasze psy' },
+  { href: '/szczenieta', label: 'Szczenięta' },
+  { href: '/aktualnosci', label: 'Aktualności' },
+  { href: '/kontakt', label: 'Kontakt' }
+];
+---
+<header>
+  <div class="container nav">
+    <a href="/" aria-label="Galicyjska Horda - strona główna"><strong>Galicyjska Horda</strong></a>
+    <nav aria-label="Nawigacja główna" class="nav-links">
+      {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+  </div>
+</header>
