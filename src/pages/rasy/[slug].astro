@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const breeds = await getCollection('breeds');
+  return breeds.map((b) => ({ params: { slug: b.data.slug }, props: { breed: b } }));
+}
+
+const { breed } = Astro.props;
+const { Content } = await breed.render();
+---
+<BaseLayout title={`${breed.data.name} | Galicyjska Horda`} description={breed.data.intro}>
+  <section class="section container">
+    <h1>{breed.data.name}</h1>
+    <div class="card"><Content /></div>
+    <div class="grid" style="margin-top:1rem;">
+      <article class="card"><h2>Dla kogo</h2><p>{breed.data.forWhom}</p></article>
+      <article class="card"><h2>Potrzeby</h2><p>{breed.data.needs}</p></article>
+      <article class="card"><h2>Pielęgnacja</h2><p>{breed.data.grooming}</p></article>
+    </div>
+  </section>
+</BaseLayout>
